@@ -44,44 +44,66 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <main className="main">
+      {/* <main className="main">
         <Box1 />
         <Box2 />
-      </main>
+      </main> */}
     </>
   );
 }
 
 const Navbar = () => {
-  const [query, setQuery] = useState("");
-
   return (
     <>
       <nav className="nav-bar">
-        <div className="logo">
-          <span role="img">🍥</span>
-          <h1>WeeBoo</h1>
-          <span role="img">🍥</span>
-        </div>
-        <div className="search-container">
-          <input
-            className="search"
-            type="text"
-            placeholder="Search anime..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <p className="search-results">
-            Found <strong>4</strong> results
-          </p>
-        </div>
+        <Logo />
+        <Search />
       </nav>
     </>
   );
 };
 
-const Box1 = () => {
+const Logo = () => {
+  return (
+    <>
+      <div className="logo">
+        <span role="img">🍥</span>
+        <h1>WeeBoo</h1>
+        <span role="img">🍥</span>
+      </div>
+    </>
+  );
+};
 
+const Search = () => {
+  const [query, setQuery] = useState("");
+  return (
+    <>
+      <div className="search-container">
+        <input
+          className="search"
+          type="text"
+          placeholder="Search anime..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <SearchResult />
+      </div>
+    </>
+  );
+};
+
+const SearchResult = () => {
+  return (
+    <>
+      <p className="search-results">
+        Found <strong>4</strong> results
+      </p>
+    </>
+  );
+};
+
+const Box1 = () => {
   const [animes, setAnimes] = useState(animesData);
   const [isOpen1, setIsOpen1] = useState(true);
 

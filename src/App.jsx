@@ -44,10 +44,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-      {/* <main className="main">
-        <Box1 />
-        <Box2 />
-      </main> */}
+      <Main/>
     </>
   );
 }
@@ -103,14 +100,27 @@ const SearchResult = () => {
   );
 };
 
-const Box1 = () => {
+const Main = () => {
+
   const [animes, setAnimes] = useState(animesData);
-  const [isOpen1, setIsOpen1] = useState(true);
+  const [selectedAnime, setSelectedAnime] = useState(animes[0]);
+  const [isOpen2, setIsOpen2] = useState(true);
 
   function handleSelectedAnime(id) {
     const newAnime = animes.filter((anime) => anime.mal_id === id);
     setSelectedAnime(newAnime[0]);
   }
+
+  return (<>
+    <main className="main">
+      <AnimeList animes={animes} onSelectedAnime={handleSelectedAnime}/>
+    </main>
+  </>)
+}
+
+const AnimeList = ({animes, onSelectedAnime}) => {
+  const [isOpen1, setIsOpen1] = useState(true);
+
   return (
     <>
       <div className="box">
@@ -125,7 +135,7 @@ const Box1 = () => {
             {animes?.map((anime) => (
               <li
                 key={anime.mal_id}
-                onClick={() => handleSelectedAnime(anime.mal_id)}
+                onClick={() => onSelectedAnime(anime.mal_id)}
               >
                 <img src={anime.image} alt={`${anime.title} cover`} />
                 <h3>{anime.title}</h3>
@@ -145,8 +155,7 @@ const Box1 = () => {
 };
 
 const Box2 = () => {
-  const [selectedAnime, setSelectedAnime] = useState(animes[0]);
-  const [isOpen2, setIsOpen2] = useState(true);
+  
   return (
     <>
       <div className="box">

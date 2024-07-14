@@ -112,14 +112,14 @@ const Main = () => {
   return (
     <>
       <main className="main">
-        <AnimeList animes={animes} onSelectedAnime={handleSelectedAnime} />
+        <ListBox animes={animes} onSelectedAnime={handleSelectedAnime} />
         <SelectedBox selectedAnime={selectedAnime} />
       </main>
     </>
   );
 };
 
-const AnimeList = ({ animes, onSelectedAnime }) => {
+const ListBox = ({ animes, onSelectedAnime }) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -132,25 +132,40 @@ const AnimeList = ({ animes, onSelectedAnime }) => {
           {isOpen1 ? "–" : "+"}
         </button>
         {isOpen1 && (
-          <ul className="list list-anime">
-            {animes?.map((anime) => (
-              <li
-                key={anime.mal_id}
-                onClick={() => onSelectedAnime(anime.mal_id)}
-              >
-                <img src={anime.image} alt={`${anime.title} cover`} />
-                <h3>{anime.title}</h3>
-                <div>
-                  <p>
-                    <span>{anime.year}</span>
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <AnimeList animes={animes} onSelectedAnime={onSelectedAnime} />
         )}
       </div>
       ;
+    </>
+  );
+};
+
+const AnimeList = ({ animes, onSelectedAnime }) => {
+  return (
+    <ul className="list list-anime">
+      {animes?.map((anime) => (
+        <Anime
+          key={anime.mal_id}
+          anime={anime}
+          onSelectedAnime={onSelectedAnime}
+        />
+      ))}
+    </ul>
+  );
+};
+
+const Anime = ({ anime, onSelectedAnime }) => {
+  return (
+    <>
+      <li onClick={() => onSelectedAnime(anime.mal_id)}>
+        <img src={anime.image} alt={`${anime.title} cover`} />
+        <h3>{anime.title}</h3>
+        <div>
+          <p>
+            <span>{anime.year}</span>
+          </p>
+        </div>
+      </li>
     </>
   );
 };
@@ -166,27 +181,30 @@ const SelectedBox = ({ selectedAnime }) => {
         >
           {isOpen2 ? "–" : "+"}
         </button>
-        {isOpen2 && (
-          <div className="details">
-            <header>
-              <img
-                src={selectedAnime.image}
-                alt={`${selectedAnime.title} cover`}
-              />
-              <div className="details-overview">
-                <h2>{selectedAnime.title}</h2>
-                <p>
-                  {selectedAnime.year} &bull; {selectedAnime.score}
-                </p>
-              </div>
-            </header>
-            <section>
-              <p>
-                <em>{selectedAnime.synopsis}</em>
-              </p>
-            </section>
+        {isOpen2 && <AnimeDetail selectedAnime={selectedAnime}/>}
+      </div>
+    </>
+  );
+};
+
+const AnimeDetail = ({selectedAnime}) => {
+  return (
+    <>
+      <div className="details">
+        <header>
+          <img src={selectedAnime.image} alt={`${selectedAnime.title} cover`} />
+          <div className="details-overview">
+            <h2>{selectedAnime.title}</h2>
+            <p>
+              {selectedAnime.year} &bull; {selectedAnime.score}
+            </p>
           </div>
-        )}
+        </header>
+        <section>
+          <p>
+            <em>{selectedAnime.synopsis}</em>
+          </p>
+        </section>
       </div>
     </>
   );

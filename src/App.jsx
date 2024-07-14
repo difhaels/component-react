@@ -41,20 +41,23 @@ const animesData = [
 ];
 
 export default function App() {
+  
+  const [animes, setAnimes] = useState(animesData);
+
   return (
     <>
-      <Navbar />
-      <Main />
+      <Navbar animes={animes}/>
+      <Main animes={animes}/>
     </>
   );
 }
 
-const Navbar = () => {
+const Navbar = ({animes}) => {
   return (
     <>
       <nav className="nav-bar">
         <Logo />
-        <Search />
+        <Search animes={animes}/>
       </nav>
     </>
   );
@@ -72,7 +75,7 @@ const Logo = () => {
   );
 };
 
-const Search = () => {
+const Search = ({animes}) => {
   const [query, setQuery] = useState("");
   return (
     <>
@@ -84,24 +87,23 @@ const Search = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <SearchResult />
+        <SearchResult animes={animes}/>
       </div>
     </>
   );
 };
 
-const SearchResult = () => {
+const SearchResult = ({animes}) => {
   return (
     <>
       <p className="search-results">
-        Found <strong>4</strong> results
+        Found <strong>{animes.length}</strong> results
       </p>
     </>
   );
 };
 
-const Main = () => {
-  const [animes, setAnimes] = useState(animesData);
+const Main = ({animes}) => {
   const [selectedAnime, setSelectedAnime] = useState(animes[0]);
 
   function handleSelectedAnime(id) {

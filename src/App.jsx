@@ -44,7 +44,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <Main/>
+      <Main />
     </>
   );
 }
@@ -101,24 +101,25 @@ const SearchResult = () => {
 };
 
 const Main = () => {
-
   const [animes, setAnimes] = useState(animesData);
   const [selectedAnime, setSelectedAnime] = useState(animes[0]);
-  const [isOpen2, setIsOpen2] = useState(true);
 
   function handleSelectedAnime(id) {
     const newAnime = animes.filter((anime) => anime.mal_id === id);
     setSelectedAnime(newAnime[0]);
   }
 
-  return (<>
-    <main className="main">
-      <AnimeList animes={animes} onSelectedAnime={handleSelectedAnime}/>
-    </main>
-  </>)
-}
+  return (
+    <>
+      <main className="main">
+        <AnimeList animes={animes} onSelectedAnime={handleSelectedAnime} />
+        <SelectedBox selectedAnime={selectedAnime} />
+      </main>
+    </>
+  );
+};
 
-const AnimeList = ({animes, onSelectedAnime}) => {
+const AnimeList = ({ animes, onSelectedAnime }) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -154,8 +155,8 @@ const AnimeList = ({animes, onSelectedAnime}) => {
   );
 };
 
-const Box2 = () => {
-  
+const SelectedBox = ({ selectedAnime }) => {
+  const [isOpen2, setIsOpen2] = useState(true);
   return (
     <>
       <div className="box">
